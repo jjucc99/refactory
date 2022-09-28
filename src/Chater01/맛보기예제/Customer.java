@@ -1,3 +1,5 @@
+package Chater01.맛보기예제;
+
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -26,35 +28,16 @@ public class Customer {
             double thisAmount = 0;
             Rental each = (Rental) rental.nextElement();
 
-            switch (each.getMovie().getPriceCode()) {
-                case Movie.REGULAR:
-                    thisAmount += 2;
-                    if (each.getDaysRented() > 2) {
-                        thisAmount += (each.getDaysRented() - 2) * 1.5;
-                    }
-                    break;
-                case Movie.NEW_RELEASE:
-                    thisAmount += each.getDaysRented() * 3;
-                    break;
-                case Movie.CHILDRENS:
-                        thisAmount += 1.5;
-                    if (each.getDaysRented() > 3)
-                        thisAmount += (each.getDaysRented() - 3) * 1.5;
-                    break;
-            }
-            // 적립 포인트를 1 포인트 증가
-            frequentRenterPoints ++;
-            // 최신물을 이틀 이상 대여하면 보너스 포인트 지급
-            if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE)
-                    && each.getDaysRented() > 1) {
-                frequentRenterPoints++;
-            }
+            //비디오 종류별 대여료 계산 함수 호출
+//            thisAmount = each.getCharge(); 0
+
+            frequentRenterPoints += each.getFrequentRenterPoints();
             //이번에 대여하는 비디오 정보와 대여료를 출력
             result += "\t" + each.getMovie().getTitle() + "\t" +
-                    String.valueOf(thisAmount) + "\n";
+                    String.valueOf(each.getCharge()) + "\n";
 
             //현재까지 누적된 총 대여료
-            totalAmount += thisAmount;
+            totalAmount += each.getCharge();
         }
 
         // 푸터 행 추가
@@ -62,5 +45,4 @@ public class Customer {
         result += "적립 포인트" + String.valueOf(frequentRenterPoints);
         return result;
     }
-
 }
